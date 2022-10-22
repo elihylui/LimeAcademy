@@ -16,9 +16,13 @@ contract Library is Ownable {
     }
 
     mapping(string => Book) bookMap;
+    mapping(string => address[]) bookToUserMap;
 
     event bookAdded(
-        Book
+        string name,
+        string author,
+        uint id,
+        uint8 copies
     );
 
     event bookBorrowed(
@@ -49,12 +53,16 @@ contract Library is Ownable {
         newBook.id = _id;
         newBook.copies = _copies;
         emit bookAdded(
-            newBook
+            _name,
+            _author,
+            _id,
+            _copies
         );
         _id++;
     }
 
-    function alreadyBorrowed(string memory _name) public view returns (bool) {
+    function alreadyBorrowed(string memory _name) internal view returns (bool) {
+        require(bookExists(_name), "this book does not exist");
         for (uint i=0; i < bookMap[_name].user.length; i++) {
             if (bookMap[_name].user[i]==msg.sender) {
                 return true;
@@ -67,6 +75,7 @@ contract Library is Ownable {
         require(!alreadyBorrowed(_name), "you have already borrowed this book");
         bookMap[_name].user.push(msg.sender);
         bookMap[_name].copies--;
+        bookToUserMap[_name].push(msg.sender);
         emit bookBorrowed (
             _name,
             bookMap[_name].copies,
@@ -83,7 +92,8 @@ contract Library is Ownable {
     }
 
     function returnBook (string memory _name) public {
-        require(alreadyBorrowed(_name), "you don't have this book.");
+        require(bookExists(_name), "this book does not exist");
+        require(alreadyBorrowed(_name), "you don't have this book");
         findAndDelete(_name);
         bookMap[_name].copies++;
         emit bookReturned (
@@ -93,13 +103,13 @@ contract Library is Ownable {
     }
 
     function isAvailable(string memory _name) public view returns (bool) {
-        require(bookExists(_name), "this book doesn not exist");
+        require(bookExists(_name), "this book does not exist");
             if (bookMap[_name].copies > 0) {
                 return true;
             } else return false;
     }
 
     function seeRecord (string memory _name) public view returns(address  [] memory) {
-        return bookMap[_name].user;
+        return bookToUserMap[_name];
     }
 }
