@@ -18,6 +18,7 @@
   "homepage": "https://github.com/elihylui/LimeAcademy#readme",
   "devDependencies": {
     "@nomicfoundation/hardhat-toolbox": "^2.0.0",
+    "@nomiclabs/hardhat-etherscan": "^3.1.1",
     "hardhat": "^2.12.0"
   }
 }
