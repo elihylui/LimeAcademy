@@ -12,6 +12,12 @@ async function main() {
   const usElection = await USElection.deploy();
   await usElection.deployed();
   console.log("USElection deployed to:", usElection.address);
+
+  await hre.run("verify:verify", {
+    address: usElection.address,
+    constructorArguments: [
+    ],
+  });
 }
 
 main().catch((error) => {
