@@ -14,9 +14,8 @@ const config: HardhatUserConfig = {
   },
   networks: {
     goerli: {
-      url: `${process.env.INFURA_API_KEY}`,
-      accounts: [`0x42575f4941c226ecd6180a70e8aaa7063ca935253a4966640b4adf308e4ba8bd`, 
-    ]
+      url: "https://goerli.infura.io/v3/6b36b2e9d5e14cc4af78d5e905cc38f7",
+      accounts: ['42575f4941c226ecd6180a70e8aaa7063ca935253a4966640b4adf308e4ba8bd']
     }
   },
   etherscan: {
@@ -27,16 +26,16 @@ const config: HardhatUserConfig = {
 };
 
 task("deploy-testnets", "Deploys contract on a provided network")
-  .setAction(async () => {
-        const deployLibraryContract = require("./scripts/deploy");
-        await deployLibraryContract();
+    .setAction(async () => {
+        const main = require("./scripts/deploy");
+        await main();
     });
 
-task("deploy-mainnet", "Deploys contract on a provided network")
-.addParam("privateKey", "Please provide the private key")
-.setAction(async ({privateKey}) => {
-    const deployLibraryContract = require("./scripts/deploy-with-param");
-    await deployLibraryContract(privateKey);
-});
+// task("deploy-mainnet", "Deploys contract on a provided network")
+// .addParam("privateKey", "Please provide the private key")
+// .setAction(async ({privateKey}) => {
+//     const deployElectionContract = require("./scripts/deploy-with-param");
+//     await deployElectionContract(privateKey);
+// });
 
 export default config;

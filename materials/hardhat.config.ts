@@ -29,11 +29,11 @@ task("deploy-testnets", "Deploys contract on a provided network")
         await deployElectionContract();
     });
 
-task("deploy-mainnet", "Deploys contract on a provided network")
-.addParam("privateKey", "Please provide the private key")
-.setAction(async ({privateKey}) => {
-    const deployElectionContract = require("./scripts/deploy-with-param");
-    await deployElectionContract(privateKey);
-});
+// task("deploy-mainnet", "Deploys contract on a provided network")
+// .addParam("privateKey", "Please provide the private key")
+// .setAction(async ({privateKey}) => {
+//     const deployElectionContract = require("./scripts/deploy-with-param");
+//     await deployElectionContract(privateKey);
+// });
 
 export default config;
