@@ -11,7 +11,7 @@ async function interact() {
     const balance = await wallet.getBalance();
     console.log("balance is: " + hre.ethers.utils.formatEther(balance))
 
-    const contractAddress = "<replace this with goerli contract address>"
+    const contractAddress = "0x8b0F73a616A87c94c1ae66E6Fc5d647082Cb221A"
     const library = new hre.ethers.Contract(contractAddress, Library.abi, wallet)
     console.log("contract is: " + library)
 
